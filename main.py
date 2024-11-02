@@ -1,16 +1,19 @@
-# This is a sample Python script.
+import requests
 
-# Press Strg+F5 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+base_url = "https://api.spoonacular.com/recipes/findByIngredients"
+ingredients = ["apples", "flour", "sugar"]
+query = ",".join(ingredients)
+number = 2
+api_key = "4c161bfe1a274a4b8f44d41892261ee7"
 
+headers = {
+    "x-api-key": api_key
+}
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
+params = {
+    "ingredients": query,
+    "number": number
+}
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+response = requests.get(base_url, headers=headers, params=params)
+print(response.json())
