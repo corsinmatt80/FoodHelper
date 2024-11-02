@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Helper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .input-area {
+            margin-bottom: 20px;
+        }
+        .ingredient-input {
+            width: 80%;
+            padding: 10px;
+            margin-right: 5px;
+        }
+        .button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .recipes {
+            margin-top: 20px;
+        }
+        .recipe {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #recipe-container {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Food Helper</h1>
+        <div class="input-area">
+            <input type="text" id="ingredientInput" class="ingredient-input" placeholder="Enter ingredients, separated by commas">
+            <button class="button" onclick="fetchRecipes()">Get Recipes</button>
+        </div>
+        <div class="recipes" id="recipesContainer"></div>
+        <div id="recipe-container" style="display:none;"></div>
+        <button id="backButton" style="display:none;" onclick="goBack()">Back to Recipes</button> <!-- Back button -->
+    </div>
+
+    <script src="../backend/app.js"></script> <!-- Ensure this path is correct -->
+</body>
+</html>
