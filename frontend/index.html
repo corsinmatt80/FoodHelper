@@ -5,62 +5,239 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
             background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
         }
         h1 {
             color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
         }
         .container {
             max-width: 800px;
+            width: 90%;
             margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
+        /* Input area styling */
         .input-area {
+            display: flex;
+            justify-content: center;
             margin-bottom: 20px;
         }
         .ingredient-input {
-            width: 80%;
-            padding: 10px;
-            margin-right: 5px;
+            width: 70%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 1em;
         }
         .button {
-            padding: 10px 15px;
+            padding: 12px 20px;
             background-color: #28a745;
             color: #fff;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
         }
+        .button:hover {
+            background-color: #218838;
+        }
+
+        /* Recipe list styling */
         .recipes {
             margin-top: 20px;
         }
         .recipe {
             background-color: #fff;
             padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
         }
+        .recipe:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .recipe img {
+            width: 120px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+        .recipe h3 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .recipe p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .recipe a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .recipe a:hover {
+            text-decoration: underline;
+        }
+
+        /* Recipe detail view styling */
         #recipe-container {
             margin-top: 20px;
             background-color: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             display: none; /* Initially hidden */
         }
+        #recipe-container h2 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        #recipe-container img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        /* Overview Section for Time, Calories, Protein, etc. */
+        .overview {
+            display: flex;
+            gap: 15px;
+            font-size: 1em;
+            color: #444;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            justify-content: space-between;
+        }
+        .overview div {
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            flex: 1;
+        }
+        .overview div span {
+            display: block;
+            font-size: 1.2em;
+            color: #333;
+            font-weight: bold;
+        }
+        .overview div small {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        /* Styling for recipe summary */
+        .recipe-summary {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #555;
+            margin: 20px 0;
+        }
+
+        /* Styling for ingredients list */
+        .ingredients-list {
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+        .ingredients-list li {
+            margin-bottom: 5px;
+            font-size: 1em;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        /* Styling for instructions list */
+        .instructions-list {
+            padding-left: 20px;
+            list-style-type: decimal;
+        }
+        .instructions-list li {
+            margin-bottom: 10px;
+            font-size: 1em;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Styling for similar recipes section */
+        .similar-recipes {
+            margin-top: 30px;
+            font-size: 0.95em;
+        }
+        .similar-recipes h3 {
+            font-size: 1.3em;
+            color: #444;
+            margin-bottom: 10px;
+        }
+        .similar-recipes a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .similar-recipes a:hover {
+            text-decoration: underline;
+        }
+
+        /* Back button styling */
+        #backButton {
+            display: none;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        #backButton:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="main-content">
         <h1>Food Helper</h1>
         <div class="input-area">
             <input type="text" id="ingredientInput" class="ingredient-input" placeholder="Enter ingredients, separated by commas">
             <button class="button" onclick="fetchRecipes()">Get Recipes</button>
         </div>
         <div class="recipes" id="recipesContainer"></div>
-        <div id="recipe-container" style="display:none;"></div>
-        <button id="backButton" style="display:none;" onclick="goBack()">Back to Recipes</button> <!-- Back button -->
     </div>
+
+    <div id="recipe-container" style="display: none;"></div> <!-- Recipe detail view, initially hidden -->
+    <button id="backButton" style="display: none;" onclick="navigateBack()">Back to Recipes</button>
 
     <script src="../backend/app.js"></script> <!-- Ensure this path is correct -->
 </body>
