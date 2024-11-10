@@ -62,6 +62,7 @@
         .recipes {
             margin-top: 20px;
         }
+        /* Styling for each recipe card */
         .recipe {
             background-color: #fff;
             padding: 15px;
@@ -77,15 +78,20 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         .recipe img {
-            width: 120px;
-            height: auto;
-            border-radius: 10px;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
             margin-right: 20px;
+            object-fit: cover;
+        }
+        .recipe-content {
+            flex: 1;
         }
         .recipe h3 {
-            margin: 0;
-            font-size: 1.2em;
+            margin: 0 0 8px;
+            font-size: 1.1em;
             color: #333;
+            font-weight: bold;
         }
         .recipe p {
             margin: 5px 0;
@@ -93,9 +99,10 @@
             color: #666;
         }
         .recipe a {
-            color: #007bff;
+            color: #28a745;
             text-decoration: none;
             font-weight: bold;
+            font-size: 0.9em;
             margin-top: 10px;
             display: inline-block;
         }
@@ -110,7 +117,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            display: none; /* Initially hidden */
+            display: none;
         }
         #recipe-container h2 {
             font-size: 2em;
@@ -156,74 +163,53 @@
             color: #666;
         }
 
-        /* Styling for recipe summary */
-        .recipe-summary {
-            font-size: 1em;
-            line-height: 1.6;
-            color: #555;
-            margin: 20px 0;
+        /* Recipe header styling */
+        .recipe-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
 
-        /* Styling for ingredients list */
-        .ingredients-list {
-            padding-left: 20px;
-            list-style-type: disc;
-        }
-        .ingredients-list li {
-            margin-bottom: 5px;
-            font-size: 1em;
-            line-height: 1.5;
+        /* Title styling within the recipe header */
+        .recipe-header h2 {
+            font-size: 2em;
             color: #333;
+            margin: 0;
+            flex-grow: 1;
         }
 
-        /* Styling for instructions list */
-        .instructions-list {
-            padding-left: 20px;
-            list-style-type: decimal;
-        }
-        .instructions-list li {
-            margin-bottom: 10px;
-            font-size: 1em;
-            line-height: 1.6;
-            color: #333;
-        }
 
-        /* Styling for similar recipes section */
-        .similar-recipes {
-            margin-top: 30px;
-            font-size: 0.95em;
-        }
-        .similar-recipes h3 {
-            font-size: 1.3em;
-            color: #444;
-            margin-bottom: 10px;
-        }
-        .similar-recipes a {
-            color: #007bff;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-        .similar-recipes a:hover {
-            text-decoration: underline;
-        }
-
-        /* Back button styling */
+        /* Styling for the back button within the header */
         #backButton {
-            display: none;
-            background-color: #007bff;
+            padding: 12px 20px;
+            background-color: #28a745;
             color: #fff;
             border: none;
-            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
-            margin-top: 20px;
             transition: background-color 0.3s ease;
         }
         #backButton:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
 
+        /* Loading indicator styling */
+        #loadingIndicator {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -236,8 +222,18 @@
         <div class="recipes" id="recipesContainer"></div>
     </div>
 
-    <div id="recipe-container" style="display: none;"></div> <!-- Recipe detail view, initially hidden -->
-    <button id="backButton" style="display: none;" onclick="navigateBack()">Back to Recipes</button>
+    <div id="recipe-container" style="display: none;">
+        <div class="recipe-header">
+            <h2>Recipe Title</h2>
+            <button id="backButton" onclick="navigateBack()" style="display: none;">Back to Recipes</button>
+        </div>
+        <!-- Recipe details go here -->
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator">
+        Loading...
+    </div>
 
     <script src="../backend/app.js"></script> <!-- Ensure this path is correct -->
 </body>

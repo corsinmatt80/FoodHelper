@@ -1,5 +1,5 @@
 // Your Spoonacular API key
-const API_KEY = '4c161bfe1a274a4b8f44d41892261ee7'; // Replace with your actual API key
+const API_KEY = ''; // Replace with your actual API key
 
 // Display loading indicator
 function showLoading(isLoading) {
@@ -47,13 +47,18 @@ function displayRecipes(recipes) {
     recipes.forEach(recipe => {
         const recipeElement = document.createElement('div');
         recipeElement.classList.add('recipe');
+
+        // Inner HTML with a content container for better alignment
         recipeElement.innerHTML = `
-            <h3>${recipe.title}</h3>
-            <img src="${recipe.image}" alt="${recipe.title}" style="width:100px; height:auto;"/>
-            <p>Used Ingredients: ${recipe.usedIngredientCount}</p>
-            <p>Missing Ingredients: ${recipe.missedIngredientCount}</p>
-            <a href="#" onclick="showRecipeDetails(${recipe.id}); return false;">Show Recipe</a>
+            <img src="${recipe.image}" alt="${recipe.title}" />
+            <div class="recipe-content">
+                <h3>${recipe.title}</h3>
+                <p>Used Ingredients: ${recipe.usedIngredientCount}</p>
+                <p>Missing Ingredients: ${recipe.missedIngredientCount}</p>
+                <a href="#" onclick="showRecipeDetails(${recipe.id}); return false;">Show Recipe</a>
+            </div>
         `;
+
         recipesContainer.appendChild(recipeElement);
     });
 }
@@ -100,7 +105,11 @@ function displayRecipeDetails(recipe) {
     
     // Populate the container with the recipe's details in a structured layout
     container.innerHTML = `
-        <h2>${recipe.title}</h2>
+        <div class="recipe-header">
+            <h2>${recipe.title}</h2>
+            <button id="backButton" onclick="navigateBack()">Back to Recipes</button>
+        </div>
+
         <img src="${recipe.image}" alt="${recipe.title}" />
 
         <div class="overview">
@@ -126,8 +135,6 @@ function displayRecipeDetails(recipe) {
             </div>
         </div>
 
-        <p class="recipe-summary">${recipe.summary || 'No summary available.'}</p>
-
         <h3>Ingredients</h3>
         <ul class="ingredients-list">
             ${recipe.extendedIngredients ? recipe.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('') : '<li>No ingredients found.</li>'}
@@ -135,15 +142,11 @@ function displayRecipeDetails(recipe) {
 
         <h3>Instructions</h3>
         <ol class="instructions-list">
-            ${recipe.instructions ? recipe.instructions.split('. ').map(step => `<li>${step}</li>`).join('') : '<li>No instructions available.</li>'}
+            ${recipe.instructions ? recipe.instructions.split('\n').map(step => `<li>${step.trim()}</li>`).join('') : '<li>No instructions available.</li>'}
         </ol>
-
-        <div class="similar-recipes">
-            <h3>Similar Recipes</h3>
-            ${recipe.similarRecipes ? recipe.similarRecipes.map(similar => `<a href="#" onclick="fetchRecipeDetails(${similar.id}); return false;">${similar.title}</a>`).join(' | ') : '<p>No similar recipes found.</p>'}
-        </div>
     `;
 
+    // Show the recipe container and hide the main content
     container.style.display = 'block';
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('backButton').style.display = 'block';
