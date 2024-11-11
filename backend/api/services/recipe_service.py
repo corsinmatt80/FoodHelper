@@ -1,19 +1,11 @@
 import requests
-
+from backend.api.config import API_KEY, BASE_URL
 
 def get_recipe(query):
-    base_url = "https://api.spoonacular.com/recipes/findByIngredients"
-    query = ",".join(query)
-    number = 2 # 2 to minimize missing ingredients
-    api_key = ""
+    """Fetch recipes based on ingredients."""
+    url = f"{BASE_URL}/recipes/findByIngredients"
+    params = {"ingredients": query, "number": 2, "apiKey": API_KEY}
 
-    headers = {
-        "x-api-key": api_key
-    }
-
-    params = {
-        "ingredients": query,
-        "number": number
-    }
-
-    return requests.get(base_url, headers=headers, params=params)
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    return response.json()
