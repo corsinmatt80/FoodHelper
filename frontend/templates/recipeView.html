@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recipe.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles.css') }}">
+</head>
+<body>
+    <div class="container" id="main-content">
+        <div id="recipe-container">
+            <div class="recipe-header">
+                <h2>{{ recipe.title }}</h2>
+                <button id="backButton" onclick="history.back()">Back to Recipes</button>
+            </div>
+            <img src="{{ recipe.image }}" alt="{{ recipe.title }}" />
+            <div class="overview">
+                <div><span>{{ recipe.readyInMinutes or 'N/A' }} min</span><small>Cooking Time</small></div>
+                <div><span>{{ recipe.nutrition.nutrients | selectattr('name', 'equalto', 'Calories') | map(attribute='amount') | first | default('N/A') }} kcal</span><small>Calories</small></div>
+                <div><span>{{ recipe.nutrition.nutrients | selectattr('name', 'equalto', 'Protein') | map(attribute='amount') | first | default('N/A') }} g</span><small>Protein</small></div>
+                <div><span>{{ recipe.nutrition.nutrients | selectattr('name', 'equalto', 'Fat') | map(attribute='amount') | first | default('N/A') }} g</span><small>Fat</small></div>
+                <div><span>{{ recipe.servings or 'N/A' }}</span><small>Servings</small></div>
+            </div>
+            <p class="recipe-summary">{{ recipe.summary | safe }}</p>
+            <h3>Ingredients</h3>
+            <ul class="ingredients-list">
+                {% if recipe.extendedIngredients %}
+                {% for ingredient in recipe.extendedIngredients %}
+                <li>{{ ingredient.original }}</li>
+                {% endfor %}
+                {% else %}
+                <li>No ingredients found.</li>
+                {% endif %}
+            </ul>
+            <h3>Instructions</h3>
+            <ol class="instructions-list">
+                {% if recipe.instructions %}
+                {% for step in recipe.instructions.split('\n') %}
+                <li>{{ step.strip() }}</li>
+                {% endfor %}
+                {% else %}
+                <li>No instructions available.</li>
+                {% endif %}
+            </ol>
+
+        </div>
+    </div>
+</body>
+</html>

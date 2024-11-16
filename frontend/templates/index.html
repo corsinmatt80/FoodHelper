@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles.css') }}">
+</head>
+<body>
+<div class="container" id="main-content">
+    <h1>Food Helper</h1>
+    <div class="input-area">
+        <input type="text" id="ingredientInput" class="ingredient-input" placeholder="Enter ingredients, separated by commas" value="{% if query %}{{ query }}{% endif %}">
+        <button class="button">Get Recipes</button>
+    </div>
+    {% if query %}
+    <div id="recipe-container">
+        <div class="recipe-header">
+            <h2>Recipe Results</h2>
+        </div>
+        <div id="recipesContainer">
+            {% if recipes %}
+            {% for recipe in recipes %}
+            <div class="recipe">
+                <img src="{{ recipe['image'] }}" alt="{{ recipe['title'] }}" />
+                <div class="recipe-content">
+                    <h3>{{ recipe['title'] }}</h3>
+                    <p>Used Ingredients: {{ recipe['usedIngredientCount'] }}</p>
+                    <p>Missing Ingredients: {{ recipe['missedIngredientCount'] }}</p>
+                    <a href="/recipe/{{ recipe['id'] }}">Show Recipe</a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No recipes found. Try different ingredients!</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+<script src="{{ url_for('static', filename='scripts/main.js') }}" type="module"></script>
+</body>
+</html>

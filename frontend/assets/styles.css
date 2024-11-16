@@ -3,11 +3,11 @@ body {
     margin: 0;
     background-color: #f8f8f8;
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 h1 {
     color: #333;
@@ -112,7 +112,6 @@ h1 {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    display: none;
 }
 #recipe-container h2 {
     font-size: 2em;
@@ -120,11 +119,12 @@ h1 {
     margin-bottom: 15px;
 }
 #recipe-container img {
-    width: 100%;
+    flex: 1;
     max-width: 500px;
     height: auto;
     margin: 15px 0;
-    border-radius: 10px;
+    border-radius: 20px;
+    padding: 10px;
 }
 
 /* Overview Section for Time, Calories, Protein, etc. */
