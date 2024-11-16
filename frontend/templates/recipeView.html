@@ -34,9 +34,7 @@
             <h3>Instructions</h3>
             <ol class="instructions-list">
                 {% if recipe.instructions %}
-                {% for step in recipe.instructions.split('\n') %}
-                <li>{{ step.strip() }}</li>
-                {% endfor %}
+                {{ recipe.instructions | safe }}
                 {% else %}
                 <li>No instructions available.</li>
                 {% endif %}
