@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from services.recipe_service import RecipeService
 
 app = Flask(__name__)
+CORS(app)
+
 recipe_service = RecipeService()
 
 @app.route('/api/recipes', methods=['POST'])
