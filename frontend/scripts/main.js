@@ -6,9 +6,14 @@ import { showLoading } from './utils/domUtils.js';
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.button').addEventListener('click', async () => {
         const ingredients = document.getElementById('ingredientInput').value.split(',').map(i => i.trim()).join(',');
+        const diet = document.getElementById('dietSelect').value || null;
+        const intolerances = document.getElementById('intoleranceSelect').value.split(',').map(i => i.trim()).join(',') || null;
+        const maxCalories = document.getElementById('caloriesSelect').value || null;
+        const cuisine = document.getElementById('cuisineSelect').value || null;
+
         showLoading(true);
         try {
-            const recipes = await fetchRecipesByIngredients(ingredients);
+            const recipes = await fetchRecipesByIngredients(ingredients, diet, intolerances, maxCalories, cuisine);
             renderRecipeList(recipes.results, showRecipeDetails);
         } catch (error) {
             console.error(error);

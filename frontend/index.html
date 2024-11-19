@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Food Helper</title>
-    <!-- Link to external CSS file -->
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
@@ -10,7 +9,47 @@
         <h1>Food Helper</h1>
         <div class="input-area">
             <input type="text" id="ingredientInput" class="ingredient-input" placeholder="Enter ingredients, separated by commas">
-            <button class="button" >Get Recipes</button>
+            
+            <!-- Dropdown for selecting diet -->
+            <select id="dietSelect">
+                <option value="">Select Diet (optional)</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="paleo">Paleo</option>
+                <option value="keto">Keto</option>
+                <option value="gluten free">Gluten Free</option>
+            </select>
+            
+            <!-- Dropdown for selecting intolerances -->
+            <select id="intoleranceSelect">
+                <option value="">Select Intolerances (optional)</option>
+                <option value="dairy">Dairy</option>
+                <option value="egg">Egg</option>
+                <option value="gluten">Gluten</option>
+                <option value="peanut">Peanut</option>
+                <option value="seafood">Seafood</option>
+            </select>
+            
+            <!-- Dropdown for selecting max calories -->
+            <select id="caloriesSelect">
+                <option value="">Max Calories (optional)</option>
+                <option value="250">Up to 250</option>
+                <option value="500">Up to 500</option>
+                <option value="750">Up to 750</option>
+                <option value="1000">Up to 1000</option>
+            </select>
+            
+            <!-- Dropdown for selecting cuisine -->
+            <select id="cuisineSelect">
+                <option value="">Select Cuisine (optional)</option>
+                <option value="Italian">Italian</option>
+                <option value="Mexican">Mexican</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Japanese">Japanese</option>
+                <option value="American">American</option>
+            </select>
+
+            <button class="button">Get Recipes</button>
         </div>
         <div class="recipes" id="recipesContainer"></div>
     </div>
