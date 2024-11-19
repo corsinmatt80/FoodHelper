@@ -13,7 +13,7 @@ class SpoonacularAPI:
         url = f"{BASE_URL}/recipes/complexSearch"
         params = {
             "apiKey": API_KEY,
-            "ingredients": ingredients,
+            "includeIngredients": ingredients,
             "diet": diet,
             "intolerances": intolerances,
             "maxCalories": maxCalories,
@@ -29,3 +29,7 @@ class SpoonacularAPI:
         response = requests.get(url, params=params)
         response.raise_for_status()
         return response.json()
+    
+api = SpoonacularAPI()
+recipes = api.fetch_recipes(ingredients="apple", diet="vegetarian", maxCalories=500)
+print(recipes)

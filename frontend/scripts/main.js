@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showLoading(true);
         try {
             const recipes = await fetchRecipesByIngredients(ingredients);
-            renderRecipeList(recipes, showRecipeDetails);
+            renderRecipeList(recipes.results, showRecipeDetails);
         } catch (error) {
             console.error(error);
             alert('Failed to load recipes.');
