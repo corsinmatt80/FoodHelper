@@ -10,12 +10,20 @@ recipe_service = RecipeService()
 @app.route('/api/recipes', methods=['POST'])
 def get_recipes():
     data = request.get_json()
-    ingredients = data.get("ingredients", "")
-    if not ingredients:
-        return jsonify({"error": "Ingredients are required"}), 400
+    ingredients = data.get("ingredients")
+    diet = data.get("diet")
+    intolerances = data.get("intolerances")
+    maxCalories = data.get("maxCalories")
+    cuisine = data.get("cuisine")
     
     try:
-        recipes = recipe_service.get_recipes_by_ingredients(ingredients)
+        recipes = recipe_service.get_recipes(
+            ingredients=ingredients,
+            diet=diet,
+            intolerances=intolerances,
+            maxCalories=maxCalories,
+            cuisine=cuisine
+        )
         return jsonify(recipes)
     except Exception as e:
         return jsonify({"error": str(e)}), 500

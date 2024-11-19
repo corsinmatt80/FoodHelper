@@ -1,10 +1,24 @@
 import requests
-from config import API_KEY, BASE_URL
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
+BASE_URL = os.getenv("BASE_URL")
+
 
 class SpoonacularAPI:
-    def fetch_recipes_by_ingredients(self, ingredients):
-        url = f"{BASE_URL}/recipes/findByIngredients"
-        params = {"ingredients": ingredients, "apiKey": API_KEY}
+    def fetch_recipes(self, ingredients=None, diet=None, intolerances=None, maxCalories=None, cuisine=None):
+        url = f"{BASE_URL}/recipes/complexSearch"
+        params = {
+            "apiKey": API_KEY,
+            "ingredients": ingredients,
+            "diet": diet,
+            "intolerances": intolerances,
+            "maxCalories": maxCalories,
+            "cuisine": cuisine
+        }
         response = requests.get(url, params=params)
         response.raise_for_status()
         return response.json()
