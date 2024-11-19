@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Food Helper</title>
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
     <div class="container" id="main-content">
         <h1>Food Helper</h1>
+        <p>Enter ingredients you have, and we'll find recipes for you!</p>
         <div class="input-area">
             <input type="text" id="ingredientInput" class="ingredient-input" placeholder="Enter ingredients, separated by commas">
-            
+            <button class="button">Get Recipes</button>
+        </div>
+
+        <!-- Filters Button -->
+        <button class="filters-button">Show Filters</button>
+
+         <!-- Filters Container, initially hidden -->
+         <div class="filters-container">
             <!-- Dropdown for selecting diet -->
             <select id="dietSelect">
                 <option value="">Select Diet (optional)</option>
@@ -48,9 +57,8 @@
                 <option value="Japanese">Japanese</option>
                 <option value="American">American</option>
             </select>
-
-            <button class="button">Get Recipes</button>
         </div>
+
         <div class="recipes" id="recipesContainer"></div>
     </div>
 
@@ -63,7 +71,7 @@
     </div>
 
     <!-- Loading Indicator -->
-    <div id="loadingIndicator">
+    <div id="loadingIndicator" style="display: none;">
         Loading...
     </div>
 

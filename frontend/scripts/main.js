@@ -41,3 +41,12 @@ function navigateBack() {
     document.getElementById('main-content').style.display = 'block';
     document.getElementById('recipe-container').style.display = 'none';
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filtersButton = document.querySelector('.filters-button');
+    const filtersContainer = document.querySelector('.filters-container');
+
+    filtersButton.addEventListener('click', function() {
+        filtersContainer.classList.toggle('active');
+    });
+});
