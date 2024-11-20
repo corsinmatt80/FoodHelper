@@ -34,5 +34,3 @@ def text_to_speech(text):
 
     return result2['content']['results']['audio__text_to_speech']['results'][0]['audio_resource_url']
 
-
-print(text_to_speech("Hello, I am your Food Helper."))
