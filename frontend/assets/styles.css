@@ -1,13 +1,16 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More modern font */
     margin: 0;
-    background-color: #f8f8f8;
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     flex-direction: column;
+    background: linear-gradient(to bottom, #f7f7f7, #ffffff);
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 h1 {
@@ -25,6 +28,7 @@ h1 {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align : center;
 }
 select {
     padding: 12px;
@@ -46,7 +50,7 @@ select:hover, select:focus {
 /* Toggle Button for Filters */
 .filters-button {
     display: block;
-    background-color: #4CAF50; /* Green button */
+    background-color: #2ecc71;
     color: white;
     padding: 10px 15px;
     text-align: center;
@@ -56,8 +60,12 @@ select:hover, select:focus {
     margin-bottom: 10px;
 }
 
+.button:hover {
+    background-color: #27ae60;
+}
+
 .filters-button:hover {
-    background-color: #45a049; /* Darker shade on hover */
+    background-color: #27ae60;
 }
 
 /* Toggle Filters Visibility */
@@ -100,8 +108,8 @@ select:hover, select:focus {
 
 .button {
     padding: 10px 15px; /* Adjust padding to reduce size */
-    background-color: #4CAF50; /* A more vibrant green */
-    color: #fff;
+    background-color: #2ecc71;
+    color: white;
     font-size: 1rem; /* Adjust font size if needed */
     border: none;
     border-radius: 5px;
@@ -183,6 +191,9 @@ select:hover, select:focus {
     margin: 15px 0;
     border-radius: 10px;
 }
+#recipe-container p {
+    text-align : center;
+}
 
 /* Overview Section for Time, Calories, Protein, etc. */
 .overview {
@@ -262,3 +273,9 @@ select:hover, select:focus {
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+#servingsValue {
+    font-size: 18px;
+    font-weight: bold;
+}
+
