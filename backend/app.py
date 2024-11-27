@@ -39,8 +39,6 @@ def get_recipe_details(recipe_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
 @app.route('/api/textToSpeech', methods=['POST'])
@@ -53,3 +51,7 @@ def text_to_speech():
         return jsonify({"audio_url": audio_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

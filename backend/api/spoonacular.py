@@ -32,4 +32,4 @@ class SpoonacularAPI:
     
 api = SpoonacularAPI()
 recipes = api.fetch_recipes(ingredients="apple", diet="vegetarian", maxCalories=500)
-print(recipes)
+print(recipes.title)

@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Metadata for the HTML document -->
     <meta charset="UTF-8">
     <title>Food Helper</title>
+
+    <!-- Link to the external stylesheet -->
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+    <!-- Main container for the application -->
     <div class="container" id="main-content">
         <h1>Food Helper</h1>
         <p>Enter ingredients you have, and we'll find recipes for you!</p>
+
+        <!-- Input area for entering ingredients -->
         <div class="input-area">
             <input type="text" id="ingredientInput" class="ingredient-input" placeholder="Enter ingredients, separated by commas 🍎">
             <button class="button">Get Recipes</button>
         </div>
 
-        <!-- Filters Button -->
+        <!-- Button to show or hide filters -->
         <button class="filters-button">Show Filters</button>
 
-         <!-- Filters Container, initially hidden -->
-         <div class="filters-container">
-            <!-- Dropdown for selecting diet -->
+        <!-- Filters section, initially hidden -->
+        <div class="filters-container">
+            <!-- Dropdown for selecting a diet preference -->
             <select id="dietSelect">
                 <option value="">Select Diet (optional)</option>
                 <option value="vegetarian">Vegetarian</option>
@@ -28,7 +34,7 @@
                 <option value="keto">Keto</option>
                 <option value="gluten free">Gluten Free</option>
             </select>
-            
+
             <!-- Dropdown for selecting intolerances -->
             <select id="intoleranceSelect">
                 <option value="">Select Intolerances (optional)</option>
@@ -38,8 +44,8 @@
                 <option value="peanut">Peanut</option>
                 <option value="seafood">Seafood</option>
             </select>
-            
-            <!-- Dropdown for selecting max calories -->
+
+            <!-- Dropdown for selecting maximum calories -->
             <select id="caloriesSelect">
                 <option value="">Max Calories (optional)</option>
                 <option value="250">Up to 250</option>
@@ -47,8 +53,8 @@
                 <option value="750">Up to 750</option>
                 <option value="1000">Up to 1000</option>
             </select>
-            
-            <!-- Dropdown for selecting cuisine -->
+
+            <!-- Dropdown for selecting cuisine type -->
             <select id="cuisineSelect">
                 <option value="">Select Cuisine (optional)</option>
                 <option value="Italian">Italian</option>
@@ -59,22 +65,27 @@
             </select>
         </div>
 
+        <!-- Container to display recipes -->
         <div class="recipes" id="recipesContainer"></div>
     </div>
 
+    <!-- Recipe details container, initially hidden -->
     <div id="recipe-container" style="display: none;">
         <div class="recipe-header">
             <h2>Recipe Title</h2>
+
+            <!-- Back button to navigate to the list of recipes -->
             <button id="backButton" onclick="navigateBack()" style="display: none;">Back to Recipes</button>
         </div>
-        <!-- Recipe details go here -->
+        <!-- Recipe details will be dynamically added here -->
     </div>
 
-    <!-- Loading Indicator -->
+    <!-- Loading indicator, initially hidden -->
     <div id="loadingIndicator" style="display: none;">
         Loading...
     </div>
 
+    <!-- JavaScript file that contains the main logic -->
     <script src="scripts/main.js" type="module"></script>
 </body>
 </html>
