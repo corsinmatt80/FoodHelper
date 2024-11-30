@@ -15,3 +15,5 @@ class RecipeService:
 
     def get_recipe_details(self, recipe_id):
         return self.api_client.fetch_recipe_details(recipe_id)
+
+
