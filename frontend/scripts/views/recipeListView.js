@@ -2,8 +2,7 @@ export function renderRecipeList(recipe, recipeDetails,onRecipeClick) {
     const recipesContainer = document.getElementById('recipesContainer');
     recipesContainer.innerHTML = '';
     const recipes = recipe.results;
-    console.log(recipes);
-    console.log(recipeDetails);
+
 
     if (recipes.length === 0) {
         recipesContainer.innerHTML = '<p>No recipes found. Try different ingredients!</p>';
@@ -16,35 +15,35 @@ export function renderRecipeList(recipe, recipeDetails,onRecipeClick) {
         const recipeElement = document.createElement('div');
         recipeElement.classList.add('recipe');
         recipeElement.innerHTML = `
-            <img src="${recipe.image}" alt="${recipe.title}" />
+            <img src="${recipes[i].image}" alt="${recipes[i].title}" />
             <div class="recipe-content">
-                <h3>${recipe.title}</h3>
+                <h3>${recipes[i].title}</h3>
                 <p>Diets: ${diets}</p>
                 <p>Calories: ${calories}</p>
-                <a href="#" data-id="${recipe.id}">Show Recipe</a>
+                <a href="#" data-id="${recipes[i].id}">Show Recipe</a>
             </div>
         `;
         recipeElement.querySelector('a').addEventListener('click', (e) => {
             e.preventDefault();
-            onRecipeClick(recipe.id);
+            onRecipeClick(recipes[i].id);
         });
         recipesContainer.appendChild(recipeElement);
     }
 }
 
 function getDietsString(recipeDetail) {
-    if (!recipe.diets || recipe.diets.length === 0) {
+    if (!recipeDetail.diets || recipeDetail.diets.length === 0) {
         return "No diets specified";
     }
-    return recipe.diets.join(" & ");
+    return recipeDetail.diets.join(" & ");
 }
 
 function getCaloriesInfo(recipeDetail) {
-    if (!recipe.nutrition || !recipe.nutrition.nutrients) {
+    if (!recipeDetail.nutrition || !recipeDetail.nutrition.nutrients) {
         return "Nutrition information is unavailable";
     }
 
-    const calories = recipe.nutrition.nutrients.find(nutrient => nutrient.name === "Calories");
+    const calories = recipeDetail.nutrition.nutrients.find(nutrient => nutrient.name === "Calories");
     if (!calories) {
         return "Calories information is unavailable";
     }

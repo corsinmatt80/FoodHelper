@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showLoading(true);
         try {
             const recipes = await fetchRecipesByIngredients(ingredients, diet, intolerances, maxCalories, cuisine);
-            console.log(recipes.number);
             const recipeDetails = [];
             for(let i = 0;i<recipes.number;i++){
                 let recipeDetail = await fetchRecipeDetails(recipes.results[i].id);
