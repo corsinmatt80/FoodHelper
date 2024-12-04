@@ -17,6 +17,7 @@ export async function fetchRecipesByIngredients(ingredients = null, diet = null,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(filteredBody),
     });
+
     if (!response.ok) throw new Error(`Failed to fetch recipes. Status: ${response.status}`);
     return response.json();
 }

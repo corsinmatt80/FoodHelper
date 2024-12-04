@@ -18,7 +18,6 @@ def get_recipes():
     intolerances = data.get("intolerances")
     maxCalories = data.get("maxCalories")
     cuisine = data.get("cuisine")
-    
     try:
         recipes = recipe_service.get_recipes(
             ingredients=ingredients,
