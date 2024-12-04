@@ -26,3 +26,38 @@ export async function fetchRecipeDetails(recipeId) {
     if (!response.ok) throw new Error(`Failed to fetch recipe details. Status: ${response.status}`);
     return response.json();
 }
+
+export async function registerUser(username, password) {
+    const response = await fetch(`http://127.0.0.1:5000/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    });
+    return response.json();  // Assuming the backend sends back some JSON data
+}
+
+export async function loginUser(username, password) {
+    const response = await fetch(`http://127.0.0.1:5000/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    });
+    if (response.ok) {
+        const data = await response.json(); // Assume we get back token or user data
+        sessionStorage.setItem('user', JSON.stringify(data));  // Storing the user data in session
+    }
+    return response;
+}
+
+export async function saveRecipe(recipeDetails) {
+    const userData = JSON.parse(sessionStorage.getItem('user'));
+    const response = await fetch('/recipes', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.token}`  // Assuming token-based auth
+        },
+        body: JSON.stringify({ details: recipeDetails })
+    });
+    return response.json();
+}

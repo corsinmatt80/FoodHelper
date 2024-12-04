@@ -2,6 +2,11 @@ import { fetchRecipesByIngredients, fetchRecipeDetails } from './services/apiSer
 import { renderRecipeList } from './views/recipeListView.js';
 import { renderRecipeDetails } from './views/recipeDetailView.js';
 import { showLoading } from './utils/domUtils.js';
+import { renderLogin } from './views/loginView.js';
+import { renderRegister } from './views/registerView.js';
+
+document.getElementById('loginButton').addEventListener('click', renderLogin);
+document.getElementById('registerButton').addEventListener('click', renderRegister);
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.button').addEventListener('click', async () => {
@@ -36,6 +41,7 @@ async function showRecipeDetails(recipeId) {
         showLoading(false);
     }
 }
+
 
 function navigateBack() {
     document.getElementById('main-content').style.display = 'block';
