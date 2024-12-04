@@ -17,7 +17,8 @@ class SpoonacularAPI:
             "diet": diet,
             "intolerances": intolerances,
             "maxCalories": maxCalories,
-            "cuisine": cuisine
+            "cuisine": cuisine,
+            "number" : 2
         }
         response = requests.get(url, params=params)
         response.raise_for_status()
@@ -30,6 +31,3 @@ class SpoonacularAPI:
         response.raise_for_status()
         return response.json()
     
-api = SpoonacularAPI()
-recipes = api.fetch_recipes(ingredients="apple", diet="vegetarian", maxCalories=500)
-print(recipes)

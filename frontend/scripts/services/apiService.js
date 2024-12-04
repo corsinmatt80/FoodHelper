@@ -43,21 +43,23 @@ export async function loginUser(username, password) {
         body: JSON.stringify({ username, password })
     });
     if (response.ok) {
-        const data = await response.json(); // Assume we get back token or user data
-        sessionStorage.setItem('user', JSON.stringify(data));  // Storing the user data in session
+        const data = await response.json();
+        sessionStorage.setItem('user', JSON.stringify(data));
     }
     return response;
 }
 
 export async function saveRecipe(recipeDetails) {
     const userData = JSON.parse(sessionStorage.getItem('user'));
-    const response = await fetch('/recipes', {
+    console.log(userData.token)
+    const response = await fetch(`http://127.0.0.1:5000/save_recipes`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userData.token}`  // Assuming token-based auth
-        },
-        body: JSON.stringify({ details: recipeDetails })
+            'Authorization': `Bearer ${userData.token}`
+},
+        body: JSON.stringify(recipeDetails)
     });
+
     return response.json();
 }

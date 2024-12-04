@@ -9,17 +9,26 @@ document.getElementById('loginButton').addEventListener('click', renderLogin);
 document.getElementById('registerButton').addEventListener('click', renderRegister);
 
 document.addEventListener('DOMContentLoaded', () => {
+    localStorage.removeItem('username');
     document.querySelector('.button').addEventListener('click', async () => {
         const ingredients = document.getElementById('ingredientInput').value.split(',').map(i => i.trim()).join(',');
         const diet = document.getElementById('dietSelect').value || null;
         const intolerances = document.getElementById('intoleranceSelect').value.split(',').map(i => i.trim()).join(',') || null;
         const maxCalories = document.getElementById('caloriesSelect').value || null;
         const cuisine = document.getElementById('cuisineSelect').value || null;
-
+        const savedUsername = localStorage.getItem('username');
+        if(savedUsername){
+            displayUsername(savedUsername);
+        }
         showLoading(true);
         try {
             const recipes = await fetchRecipesByIngredients(ingredients, diet, intolerances, maxCalories, cuisine);
-            renderRecipeList(recipes.results, showRecipeDetails);
+            const recipeDetails = []
+            for(let i = 0;i<recipes.number;i++){
+                let recipeDetail = await fetchRecipeDetails(recipes.results[i].id);
+                recipeDetails.push(recipeDetail);
+            }
+            renderRecipeList(recipes, recipeDetails, showRecipeDetails);
         } catch (error) {
             console.error(error);
             alert('Failed to load recipes.');
@@ -39,6 +48,12 @@ async function showRecipeDetails(recipeId) {
         alert('Failed to load recipe details.');
     } finally {
         showLoading(false);
+    }
+}
+function displayUsername(username) {
+    const userDisplay = document.querySelector('#userDisplay');
+    if (userDisplay) {
+        userDisplay.textContent = username;
     }
 }
 

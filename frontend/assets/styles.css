@@ -241,6 +241,63 @@ select:hover, select:focus {
     margin: 0;
     flex-grow: 1;
 }
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* General button styling */
+.auth-button {
+    background-color: #007BFF; /* Blue button color */
+    color: white;             /* White text */
+    border: none;             /* Remove border */
+    border-radius: 5px;       /* Rounded corners */
+    padding: 10px 20px;       /* Spacing inside the button */
+    font-size: 16px;          /* Larger font size */
+    cursor: pointer;          /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect */
+.auth-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Specific styles for Login and Register buttons if needed */
+.auth-button.login {
+    margin-right: 10px; /* Add spacing between the two buttons */
+}
+
+.auth-button.register {
+    background-color: #28a745; /* Green for register */
+}
+
+.auth-button.register:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Add styles for navigation bar */
+header nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 15px;
+}
+
+header nav button {
+    margin: 0 5px; /* Add spacing between buttons */
+}
+
+.auth-button:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
 
 
 /* Styling for the back button within the header */
@@ -278,4 +335,54 @@ select:hover, select:focus {
     font-size: 18px;
     font-weight: bold;
 }
+
+@media (max-width: 768px) {
+    header nav {
+        flex-direction: column; /* Stack buttons vertically */
+        align-items: flex-start; /* Align buttons to the left */
+    }
+
+    .auth-button {
+        width: 100%; /* Make buttons take full width */
+        margin: 5px 0; /* Add spacing between buttons */
+    }
+}
+#app {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    position: relative;
+    z-index: 10; /* Ensure it's above other elements */
+}
+form {
+    display: block; /* Ensure the form is displayed */
+}
+
+.recipe {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.star-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 24px;
+    color: black;
+    transition: color 0.3s;
+}
+
+.star.favorited {
+    color: gold;
+    text-shadow: 0 0 5px #000;
+}
+
 
