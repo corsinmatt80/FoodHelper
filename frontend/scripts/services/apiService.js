@@ -49,16 +49,46 @@ export async function loginUser(username, password) {
     return response;
 }
 
-export async function saveRecipe(recipeDetails) {
+export async function saveRecipe(recipeDetails, recipeResults) {
     const userData = JSON.parse(sessionStorage.getItem('user'));
-    console.log(userData.token)
+    const recipeData = {
+        details: recipeDetails,
+        results: recipeResults
+    };
+
     const response = await fetch(`http://127.0.0.1:5000/save_recipes`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${userData.token}`
 },
-        body: JSON.stringify(recipeDetails)
+        body: JSON.stringify(recipeData)
+    })
+
+    return response.json();
+}
+
+export async function getRecipesForUser() {
+    const userData = JSON.parse(sessionStorage.getItem('user'));
+    const response = await fetch(`http://127.0.0.1:5000/get_recipes`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.token}`
+        }
+    });
+
+    return response.json();
+}
+
+export async function getResultsForUser() {
+    const userData = JSON.parse(sessionStorage.getItem('user'));
+    const response = await fetch(`http://127.0.0.1:5000/get_results`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userData.token}`
+        }
     });
 
     return response.json();

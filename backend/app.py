@@ -1,6 +1,5 @@
 import json
 from datetime import timedelta
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -96,10 +95,14 @@ def login():
 @app.route('/save_recipes', methods=['POST'])
 @jwt_required()
 def save_recipe():
-    user_id = get_jwt_identity()
-    user_id = int(user_id)
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     recipe_details_str = json.dumps(data)
+
+    existing_recipe = Recipe.query.filter_by(user_id=user_id, recipe_details=recipe_details_str).first()
+    if existing_recipe:
+        return jsonify({'message': 'Recipe already saved'}), 200
+
     new_recipe = Recipe(user_id=user_id, recipe_details=recipe_details_str)
     try:
         db.session.add(new_recipe)
@@ -109,6 +112,7 @@ def save_recipe():
         return jsonify({'message': 'Error saving recipe', 'error': str(e)}), 500
 
     return jsonify({'message': 'Recipe saved successfully'}), 201
+
 
 @app.route('/get_recipes', methods=['GET'])
 @jwt_required()
@@ -120,6 +124,30 @@ def get_recipes_for_user():
         return jsonify({'recipes': recipe_list}), 200
     except Exception as e:
         return jsonify({'message': 'Error decoding recipe details', 'error': str(e)}), 500
+
+@app.route('/delete_recipes', methods=['DELETE'])
+@jwt_required()
+def delete_recipes():
+    user_id = get_jwt_identity()  # Get the user ID from the JWT token
+    try:
+        # Query all recipes for the user
+        user_recipes = Recipe.query.filter_by(user_id=user_id).all()
+
+        # Check if recipes exist
+        if not user_recipes:
+            return jsonify({'message': 'No recipes found for the user'}), 404
+
+        # Delete all recipes
+        for recipe in user_recipes:
+            db.session.delete(recipe)
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        return jsonify({'message': 'All recipes deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': 'Error deleting recipes', 'error': str(e)}), 500
 
 
 

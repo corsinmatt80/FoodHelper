@@ -380,6 +380,7 @@ form {
     transition: color 0.3s;
 }
 
+
 .star.favorited {
     color: gold;
     text-shadow: 0 0 5px #000;

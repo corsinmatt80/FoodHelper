@@ -1,30 +1,29 @@
 import {saveRecipe} from "../services/apiService.js";
 
-export function renderRecipeList(recipe, recipeDetails, onRecipeClick) {
+export function renderFavoriteRecipeList(recipes, onRecipeClick) {
     const recipesContainer = document.getElementById('recipesContainer');
     recipesContainer.innerHTML = '';
-    const recipes = recipe.results;
-
+    console.log(recipes);
     if (recipes.length === 0) {
-        recipesContainer.innerHTML = '<p>No recipes found. Try different ingredients!</p>';
+        recipesContainer.innerHTML = '<p>No favourite recipes found. Try different ingredients!</p>';
         return;
     }
 
-    for (let i = 0; i < recipe.number; i++) {
-        let diets = getDietsString(recipeDetails[i]);
-        let calories = getCaloriesInfo(recipeDetails[i]);
+    for (let i = 0; i < recipes.length; i++) {
+        let diets = getDietsString(recipes[i].details);
+        let calories = getCaloriesInfo(recipes[i].details);
         const recipeElement = document.createElement('div');
         recipeElement.classList.add('recipe');
         recipeElement.innerHTML = `
             <div class="star-container">
-                <span class="star" data-id="${recipes[i].id}">&#9733;</span>
+                <span class="star" data-id="${recipes[i].results.id}">&#9733;</span>
             </div>
-            <img src="${recipes[i].image}" alt="${recipes[i].title}" />
+            <img src="${recipes[i].results.image}" alt="${recipes[i].results.title}" />
             <div class="recipe-content">
-                <h3>${recipes[i].title}</h3>
+                <h3>${recipes[i].results.title}</h3>
                 <p>Diets: ${diets}</p>
                 <p>Calories: ${calories}</p>
-                <a href="#" data-id="${recipes[i].id}">Show Recipe</a>
+                <a href="#" data-id="${recipes[i].results.id}">Show Recipe</a>
             </div>
         `;
 

@@ -1,12 +1,26 @@
-import { fetchRecipesByIngredients, fetchRecipeDetails } from './services/apiService.js';
+import {fetchRecipesByIngredients, fetchRecipeDetails, getRecipesForUser} from './services/apiService.js';
 import { renderRecipeList } from './views/recipeListView.js';
 import { renderRecipeDetails } from './views/recipeDetailView.js';
 import { showLoading } from './utils/domUtils.js';
 import { renderLogin } from './views/loginView.js';
 import { renderRegister } from './views/registerView.js';
+import {renderFavoriteRecipeList} from "./views/favoritsListView.js";
 
 document.getElementById('loginButton').addEventListener('click', renderLogin);
 document.getElementById('registerButton').addEventListener('click', renderRegister);
+
+document.getElementById('favoritesButton').addEventListener('click', async () => {
+    showLoading(true);
+    try {
+        const favoriteRecipes = await getRecipesForUser();
+        renderFavoriteRecipeList(favoriteRecipes.recipes, showRecipeDetails);
+    } catch (error) {
+        console.error('Error loading favorites:', error);
+        alert('Failed to load favorite recipes.');
+    } finally {
+        showLoading(false);
+    }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem('username');
