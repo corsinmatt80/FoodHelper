@@ -90,6 +90,29 @@ export async function getResultsForUser() {
             'Authorization': `Bearer ${userData.token}`
         }
     });
+    
 
     return response.json();
+}
+
+export async function textToSpeech(text) {
+    try {
+        const response = await fetch(`${BASE_URL}/textToSpeech`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: text })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data.audio_url;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
 }

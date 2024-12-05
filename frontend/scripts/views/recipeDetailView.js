@@ -1,5 +1,13 @@
+import { textToSpeech } from '../services/apiService.js';
+
 export function renderRecipeDetails(recipe, onBackClick) {
+
+
     const container = document.getElementById('recipe-container');
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(recipe.instructions, 'text/html');
+    const instructions = Array.from(doc.querySelectorAll('li')).map(li => li.textContent.trim());
+    let currentInstructionIndex = 0;
     container.innerHTML = `
         <div class="recipe-header">
             <h2>${recipe.title}</h2>
@@ -22,9 +30,75 @@ export function renderRecipeDetails(recipe, onBackClick) {
         <ol class="instructions-list">
             ${recipe.instructions ? recipe.instructions.split('\n').map(step => `<li>${step.trim()}</li>`).join('') : '<li>No instructions available.</li>'}
         </ol>
+        <ol class="instructions-list">
+            ${recipe.instructions ? `
+                <button id="openModalButton" class="instructions-button">Play Instructions</button>
+                <div id="instructionsModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeModalButton">&times;</span>
+                        <div id="instructionsContainer">
+                            <p id="currentInstruction">${instructions[currentInstructionIndex]}</p>
+                            <button id="prevInstructionButton" class="instructions-button">Previous</button>
+                            <button id="nextInstructionButton" class="instructions-button">Next</button>
+                            <button id="playInstructionButton" class="instructions-button">Play</button>
+                        </div>
+                    </div>
+                </div>
+            ` : '<li>No instructions available.</li>'}
+        </ol>
+    </ol>
     `;
+
+    // Show the container and hide main content
     container.style.display = 'block';
     document.getElementById('main-content').style.display = 'none';
+
+    // Attach event handlers
     document.getElementById('backButton').onclick = onBackClick;
+    document.getElementById('openModalButton').onclick = openInstructionsModal;
+    document.getElementById('closeModalButton').onclick = closeInstructionsModal;
+    document.getElementById('prevInstructionButton').onclick = showPreviousInstruction;
+    document.getElementById('nextInstructionButton').onclick = showNextInstruction;
+    document.getElementById('playInstructionButton').onclick = playCurrentInstruction;
+
+    function openInstructionsModal() {
+        document.getElementById('instructionsModal').style.display = 'block';
+        updateInstruction();
+    }
+
+    function closeInstructionsModal() {
+        document.getElementById('instructionsModal').style.display = 'none';
+    }
+
+    function updateInstruction() {
+        document.getElementById('currentInstruction').innerText = instructions[currentInstructionIndex];
+    }
+
+    function showPreviousInstruction() {
+        if (currentInstructionIndex > 0) {
+            currentInstructionIndex--;
+            updateInstruction();
+        }
+    }
+
+    function showNextInstruction() {
+        if (currentInstructionIndex < instructions.length - 1) {
+            currentInstructionIndex++;
+            updateInstruction();
+        }
+    }
+
+    async function playCurrentInstruction() {
+        try {
+            const text = instructions[currentInstructionIndex];
+            const audioUrl = await textToSpeech(text);
+            const audio = new Audio(audioUrl);
+            audio.play();
+        } catch (error) {
+            console.error('Error playing instruction:', error);
+        }
+    }
 
 }
+
+

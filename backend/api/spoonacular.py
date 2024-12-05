@@ -18,7 +18,7 @@ class SpoonacularAPI:
             "intolerances": intolerances,
             "maxCalories": maxCalories,
             "cuisine": cuisine,
-            "number" : 2
+            "number" : 1
         }
         response = requests.get(url, params=params)
         response.raise_for_status()

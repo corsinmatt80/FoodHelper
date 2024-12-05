@@ -29,7 +29,7 @@ def text_to_speech(text):
         response2 = requests.get(url, headers=headers)
         result2 = json.loads(response2.text)
 
-        if result2['content']['status'] == "success":
+        if result2['content']['status'] == "succeeded":
             break
 
     return result2['content']['results']['audio__text_to_speech']['results'][0]['audio_resource_url']
