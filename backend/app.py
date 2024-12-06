@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from services.recipe_service import RecipeService
-from services.text_to_speech_service import TextToSpeechService
+from api.edenai import EdenAIService
 from models import User, Recipe
 from extensions import db
 from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity
@@ -23,7 +23,8 @@ with app.app_context():
     db.create_all()
 
 recipe_service = RecipeService()
-text_to_speech_service = TextToSpeechService()
+edenAIService = EdenAIService()
+
 
 @app.route('/api/recipes', methods=['POST'])
 def get_recipes():
@@ -59,10 +60,10 @@ def get_recipe_details(recipe_id):
 def text_to_speech():
     data = request.get_json()
     text = data.get("text")
-
+    print(text)
     try:
-        audio_url = text_to_speech_service.get_audio_url(text)
-        return jsonify({"audio_url": audio_url})
+        audio_url = edenAIService.text_to_speech(text)
+        return jsonify(audio_url)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     

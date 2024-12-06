@@ -4,9 +4,8 @@ export function renderRecipeDetails(recipe, onBackClick) {
 
 
     const container = document.getElementById('recipe-container');
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(recipe.instructions, 'text/html');
-    const instructions = Array.from(doc.querySelectorAll('li')).map(li => li.textContent.trim());
+    // Get steps from analyzedInstructions
+    const steps = recipe.analyzedInstructions?.[0]?.steps || [];
     let currentInstructionIndex = 0;
     container.innerHTML = `
         <div class="recipe-header">
@@ -28,16 +27,19 @@ export function renderRecipeDetails(recipe, onBackClick) {
         </ul>
         <h3>Instructions</h3>
         <ol class="instructions-list">
-            ${recipe.instructions ? recipe.instructions.split('\n').map(step => `<li>${step.trim()}</li>`).join('') : '<li>No instructions available.</li>'}
+            ${steps.length > 0
+            ? steps.map(step => `<li>${step.step}</li>`).join('')
+            : '<li>No instructions available.</li>'
+        }
         </ol>
-        <ol class="instructions-list">
-            ${recipe.instructions ? `
+        <ol class="instructions-player">
+        ${recipe.instructions ? `
                 <button id="openModalButton" class="instructions-button">Play Instructions</button>
                 <div id="instructionsModal" class="modal">
                     <div class="modal-content">
                         <span class="close" id="closeModalButton">&times;</span>
                         <div id="instructionsContainer">
-                            <p id="currentInstruction">${instructions[currentInstructionIndex]}</p>
+                            <p id="currentInstruction">${steps[currentInstructionIndex].step}</p>
                             <button id="prevInstructionButton" class="instructions-button">Previous</button>
                             <button id="nextInstructionButton" class="instructions-button">Next</button>
                             <button id="playInstructionButton" class="instructions-button">Play</button>
@@ -45,7 +47,6 @@ export function renderRecipeDetails(recipe, onBackClick) {
                     </div>
                 </div>
             ` : '<li>No instructions available.</li>'}
-        </ol>
     </ol>
     `;
 
@@ -71,7 +72,7 @@ export function renderRecipeDetails(recipe, onBackClick) {
     }
 
     function updateInstruction() {
-        document.getElementById('currentInstruction').innerText = instructions[currentInstructionIndex];
+        document.getElementById('currentInstruction').innerText = steps[currentInstructionIndex].step;
     }
 
     function showPreviousInstruction() {
@@ -82,7 +83,7 @@ export function renderRecipeDetails(recipe, onBackClick) {
     }
 
     function showNextInstruction() {
-        if (currentInstructionIndex < instructions.length - 1) {
+        if (currentInstructionIndex < steps.length - 1) {
             currentInstructionIndex++;
             updateInstruction();
         }
@@ -90,7 +91,7 @@ export function renderRecipeDetails(recipe, onBackClick) {
 
     async function playCurrentInstruction() {
         try {
-            const text = instructions[currentInstructionIndex];
+            const text = steps[currentInstructionIndex].step;
             const audioUrl = await textToSpeech(text);
             const audio = new Audio(audioUrl);
             audio.play();

@@ -110,7 +110,7 @@ export async function textToSpeech(text) {
         }
 
         const data = await response.json();
-        return data.audio_url;
+        return data.audioUrl;
     } catch (error) {
         console.error('Error:', error);
         throw error;
