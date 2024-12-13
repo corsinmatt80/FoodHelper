@@ -19,3 +19,4 @@ class Recipe(db.Model):
     recipe_details = db.Column(db.Text, nullable=False)
 
     user = db.relationship('User', backref=db.backref('recipes', lazy=True))
+
